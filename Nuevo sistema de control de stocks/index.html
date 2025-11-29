@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Control de Stock - Web-vic</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="header">
+    <h1>Control de Stock - Web-vic</h1>
+    <p>Sistema simple de inventario y ventas para tu comercio🛒</p>
+  </header>
+
+  <main class="container">
+    <!-- SECCIÓN: FORMULARIO DE PRODUCTOS -->
+    <section class="card">
+      <h2>Gestión de productos</h2>
+      <form id="product-form">
+        <div class="form-group">
+          <label for="code">Código del producto *</label>
+          <input type="text" id="code" required placeholder="Ej: ARZ12" />
+        </div>
+
+        <div class="form-group">
+          <label for="name">Nombre del producto *</label>
+          <input type="text" id="name" required placeholder="Ej: Pack arroz x12" />
+        </div>
+
+        <div class="form-group">
+          <label for="price">Precio unitario (por unidad) *</label>
+          <input type="number" id="price" step="0.01" min="0" required placeholder="Ej: 850.50" />
+        </div>
+
+        <div class="form-group">
+          <label for="stock">Stock disponible (unidades) *</label>
+          <input type="number" id="stock" min="0" required placeholder="Ej: 12" />
+        </div>
+
+        <div class="buttons-row">
+          <button type="submit" class="btn btn-primary">Guardar / Actualizar</button>
+          <button type="button" id="product-form-reset" class="btn btn-secondary">
+            Limpiar formulario
+          </button>
+        </div>
+        <p class="help-text">
+          * Si el código ya existe, se actualiza el producto. Si no, se crea uno nuevo.
+        </p>
+      </form>
+    </section>
+
+    <!-- SECCIÓN: LISTADO DE PRODUCTOS -->
+    <section class="card">
+      <h2>Inventario actual</h2>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Precio unitario</th>
+              <th>Stock</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="products-table-body">
+            <!-- Filas generadas por JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: REGISTRO DE VENTAS -->
+    <section class="card">
+      <h2>Registrar venta</h2>
+      <form id="sale-form">
+        <div class="form-group">
+          <label for="sale-code">Código del producto *</label>
+          <input type="text" id="sale-code" required placeholder="Ej: ARZ12" />
+        </div>
+
+        <div class="form-group">
+          <label for="sale-qty">Cantidad vendida *</label>
+          <input type="number" id="sale-qty" min="1" required placeholder="Ej: 2" />
+        </div>
+
+        <div class="buttons-row">
+          <button type="submit" class="btn btn-primary">Agregar venta</button>
+        </div>
+
+        <p class="help-text">
+          Ejemplo: si vendés 2 arroces y el cliente cambia de opinión, podés eliminar esa venta en la tabla y el stock se devuelve automáticamente.
+        </p>
+      </form>
+
+      <h3>Ventas del día (<span id="today-date-label"></span>)</h3>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Hora</th>
+              <th>Código</th>
+              <th>Producto</th>
+              <th>Cant.</th>
+              <th>P. unitario</th>
+              <th>Total</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="sales-table-body">
+            <!-- Filas generadas por JS -->
+          </tbody>
+        </table>
+      </div>
+      <div class="totals-row">
+        <p><strong>Total del día:</strong> $ <span id="day-total">0.00</span></p>
+      </div>
+    </section>
+
+    <!-- SECCIÓN: COPIAS DE SEGURIDAD -->
+    <section class="card">
+      <h2>Copias de seguridad</h2>
+      <div class="backup-row">
+        <button id="backup-download" class="btn btn-primary">
+          Descargar copia de seguridad (JSON)
+        </button>
+
+        <label class="btn btn-secondary file-label">
+          Restaurar desde archivo JSON
+          <input type="file" id="backup-upload" accept="application/json" hidden />
+        </label>
+      </div>
+      <p class="help-text">
+        Si el usuario borra todos los productos por error, puede restaurarlos usando la
+        copia descargada previamente.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <small>Desarrollado por Web-vic 💻</small>
+  </footer>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
